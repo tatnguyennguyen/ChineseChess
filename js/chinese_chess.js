@@ -704,13 +704,20 @@ var chess = (function() {
         } else { //not isQS
             if (dep === 0) {
                 if (isCapture) {
+                    // quiescence search
                     if (depth === 3) {
-                        return min(alphaBetaSearch(a, b, 3, true, isRoot, true, _turn), evaluate()); // quiescence search
+                        current_value = evaluate();
+                        qs_value = alphaBetaSearch(a, b, 5, true, isRoot, true, _turn);
+                        return min(qs_value, current_value)
                     }
                     if (depth === 4) {
-                        return min(alphaBetaSearch(a, b, 0, true, isRoot, true, _turn), evaluate()); // quiescence search
+                        // current_value = evaluate()
+                        qs_value = alphaBetaSearch(a, b, 4, true, isRoot, true, _turn);
+                        return qs_value
                     } else {
-                        return min(alphaBetaSearch(a, b, 1, true, isRoot, true, _turn), evaluate()); // quiescence search
+                        current_value = evaluate()
+                        qs_value = alphaBetaSearch(a, b, 3, true, isRoot, true, _turn);
+                        return min(qs_value, current_value)
                     }
                 } else {
                     return evaluate();
